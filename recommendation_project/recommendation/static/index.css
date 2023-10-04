@@ -1,0 +1,154 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+#content{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 5fr ;
+    gap: 1rem;
+    background-color: #ffffff;
+    margin-top: 5px;
+
+}
+.body{
+    background-image: url("https://images.amazon.com/images/P/0671537458.01.THUMBZZZ.jpg");
+
+}
+
+.sidebar {
+    grid-column: 1 ;
+    grid-row: 1;
+    height: 81%;
+    overflow:auto;
+    background-color: #ffffff;
+    word-break: break-word;
+    border-radius: 5px;
+    padding-left: 1%;
+}
+.sidebar > h2 {
+    height: 10%;
+}
+.sidebar > p {
+    height: 50%;
+}
+#main {
+    height: 80%;
+    grid-column: 2 ;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+}
+#main_part2 {
+    height: 100%;
+    display: flex;
+    background-color: #ffffff;
+}
+#selection{
+   
+    height: 100%;
+    overflow:auto;
+    background-color: #e2e2e2;
+    text-align: center;
+    align-items: center;
+    white-space: normal;
+    
+}
+#Search{
+    height: 10%;
+    background-color: #598792;
+}
+#childWrapper > div {
+    
+    float: left;
+    width: 10%;
+    height: 40%;
+    margin: 1%;
+    display: flex;
+    background-color: #e2e2e2;
+    
+}
+.choice_list > div {
+    
+    float: left;
+    width: 10%;
+    height: 60%;
+    margin: 5%;
+    display: flex;
+    background-color: #e2e2e2;
+}
+#choice {
+    flex: 1 1 ;
+    height: 98%;
+    overflow:auto;
+    background-color: #e2e2e2;
+    margin-top: 1%;
+}
+.title_parts{
+    height: 5%;
+    background-color: #598792;
+    text-align: center;
+    color : black;
+    
+}
+#images_choice{
+    background-color: #e2e2e2;
+    height: 60%;
+    overflow:auto;
+}
+#div_rec_btns{
+    width: 50%;
+    height: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e2e2e2;
+    position: relative;
+}
+#recommendation{
+    flex: 1 1 ;
+    height: 98%;
+    overflow:auto;
+    margin-left: 2%;
+    margin-top: 1%;
+    background-color: #e2e2e2;
+}
+.image_rec{
+
+    height: 60%;
+    
+    
+    background-color: #a82c2c;
+}
+.rec_list > div{
+    float: left;
+    width: 10%;
+    height: 60%;
+    margin: 5%;
+    display: flex;
+    background-color: #25d134;
+}
+#heading{
+    font-size: 24px;
+    color: #000000;
+    text-align: center;
+}
+#btn_predict{
+    font-size: 100%;
+    color : white;
+    background-color:#2e2e2e;
+    height: 50%;
+    width: 30%; 
+    margin-top: 2%;
+    margin-left: 20%;
+    border-radius: 10px;
+}
+#btn-loadmore{
+    background-color:#598792;
+    height: 50%;
+    width: 80%;
+    border-radius: 10px;
+}
+

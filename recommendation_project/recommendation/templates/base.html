@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommendation</title>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <link rel="stylesheet" href="{% static 'dialoge.css' %}">
+</head>
+
+<body>
+    <div id ="content"> 
+        <div class="sidebar">
+            <h2> Book Recommendation </h2>
+            <p> This is a project based on the idea to use Graph Neural Networks for Recommendation Systems.
+                In this work a GraphSAGE is used to recommend up to five books to a new user, depending on his selection.<br>
+                
+                Right now the application is very basic and missing lot of functions like a search or a load more button.<br>
+                I will incorporate these functions over time. <br><br>
+
+                <br><b>Application</b><br>
+                - Choose up to 5 books<br>
+                - Click predict<br>
+                
+                <br><b>Data</b><br>
+                I used the Book-Crossing dataset mined by Cai-Nicolas Ziegler <br>
+                (http://www2.informatik.uni-freiburg.de/~cziegler/BX/)<br>
+
+            
+            </p>
+  
+        </div>
+        <div id="main">
+            <div id="selection">
+                <div id ="Search">
+                    <p> Search</p>
+                </div>
+                <ul id="childWrapper">
+                    {% for book in books %}
+                        <div>
+                            <form action ="/simple_function">
+                                <button type="submit"  class="button_image" value={{book.isbn}} name="link">
+                                    
+                                    <img src={{ book.urlS }} >
+                                </button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                    <div>
+                        <form action="/load_more">
+                            <button type="submit"  id="btn-loadmore" class="button_image" value={{book.isbn}} name="loadM">
+                                Load More  
+                            </button>
+                        </form>
+                    </div>
+                </ul>
+            </div>
+            <div id="main_part2">
+                <div id="choice">
+                    <div id="choice_text"class="title_parts"><p> Your Choice</p></div>
+                    <div id="images_choice">
+                        <ul class="choice_list">
+                            {% for c in choice %}
+                            <div class="image_choice">
+                                <form action ="/remove_function">
+                                    <button type="submit" value={{c.isbn}} name="cisbn">
+                                        <img src={{ c.urls}} >
+                                    </button>
+                                </form>
+                            </div>
+                            {% endfor %}
+                        </ul> 
+                    </div>
+                    <div id="div_rec_btns">
+                        <form action ="/predict_function">
+                            <button id="btn_predict"> Predict </button>
+                        </form>
+                        <form action ="/reset_function">
+                            <button id="btn_predict"> Reset </button>
+                        </form>
+                    </div>
+                </div>
+                <div id="recommendation">
+                    <div id="redommendation_text" class="title_parts"><p> Recommendation</p></div>
+                    <div id="images_choice">
+                        <ul class="choice_list">
+                            {% for c in recommendation %}
+                                <div class="image_choice">
+                                    <form action ="/load_book_page">
+                                        <button type="submit" value={{c.isbn}} name="recome_book_isbn">
+                                            <img src={{ c.urls}} >
+                                        </button>
+                                    </form>
+                            </div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+
