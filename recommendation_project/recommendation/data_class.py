@@ -9,12 +9,20 @@ import torch_geometric
 from torch_geometric.data import HeteroData
 import torch_geometric.transforms as T
 
+from torch_geometric.nn import SAGEConv, to_hetero
+import torch.nn.functional as F
+
+
+        
+
+
+
 class Data_load():
     def __init__(self) -> None:
         self.script_path = os.path.dirname(__file__)
         self.ratings =  pd.read_csv(os.path.join(self.script_path, f'data/BX-Book-Ratings.csv'), sep=';', encoding='latin-1')
         self.users = pd.read_csv(os.path.join(self.script_path, f'data/BX-Users.csv'), sep=';', encoding='latin-1')
-        self.books = pd.read_csv(os.path.join(self.script_path, f'data/BX-Books.csv'), sep=';', encoding='latin-1', error_bad_lines=False)
+        self.books = pd.read_csv(os.path.join(self.script_path, f'data/BX-Books.csv'), sep=';', encoding='latin-1', on_bad_lines="skip")
         self.books_filtered = None
         self.mapping_user = None
         self.mapping_item = None
@@ -24,15 +32,60 @@ class Data_load():
         self.books_choice = []
         self.books_images_ISBN = None
         self.choice_dict = {}
-        self.gnn_loaded = self.load_model()
-        #self.gnn_loaded = pickle.load(os.path.join(self.script_path, f'data/final_book_model.sav'), "rb") ,
         self.data = self.load_data_graph()
+        print(self.data)
+        self.gnn_loaded = self.load_model(self.data)
+        #self.gnn_loaded = pickle.load(os.path.join(self.script_path, f'data/final_book_model.sav'), "rb") ,
+        
         self.grouped = pd.read_csv(os.path.join(self.script_path, f'data/ISBNS_grouped.csv'))
      
-    def load_model(self):
-        with open(os.path.join(self.script_path, f'data/final_book_model.sav'), "rb") as f:
-            model = pickle.load(f)  
+    def load_model(self, data):
+        # with open(os.path.join(self.script_path, f'data/final_book_model.sav'), "rb") as f:
+        #     model = pickle.load(f) 
+        class GNN(torch.nn.Module):
+            def __init__(self, hidden_channels):
+                super().__init__()
+                self.conv1 = SAGEConv(hidden_channels, hidden_channels)
+                self.conv2 = SAGEConv(hidden_channels, hidden_channels)
+            def forward(self, x, edge_index):
+                x = F.relu(self.conv1(x, edge_index))
+                x = self.conv2(x, edge_index)
+                return x
+        class Classifier(torch.nn.Module):
+            def forward(self, x_user, x_movie, edge_label_index):
+                edge_feat_user = x_user[edge_label_index[0]]
+                edge_feat_movie = x_movie[edge_label_index[1]]
+                return (edge_feat_user * edge_feat_movie).sum(dim=-1)
+
+        class Model(torch.nn.Module):
+            def __init__(self, hidden_channels):
+                super().__init__()
+                self.movie_lin = torch.nn.Linear(8751, hidden_channels)
+                self.user_emb = torch.nn.Embedding(47074, hidden_channels)# hier müsste es mehr sein!
+                self.movie_emb = torch.nn.Embedding(98417, hidden_channels)
+                self.gnn = GNN(hidden_channels)
+                self.gnn = to_hetero(self.gnn, metadata=data.metadata())
+                self.classifier = Classifier()
+                
+            def forward(self, data: HeteroData) :
             
+                x_dict = {
+                "user": self.user_emb(data["user"].node_id),
+                "isbn": self.movie_lin(data["isbn"].x.float()) + self.movie_emb(data["isbn"].node_id),
+                } 
+                x_dict = self.gnn(x_dict, data.edge_index_dict)
+                pred = self.classifier(
+                    x_dict["user"],
+                    x_dict["isbn"],
+                    data["user", "review", "isbn"].edge_label_index,
+                )
+                return pred
+        model = Model(64)
+        #model.load_state_dict(torch.load(PATH, weights_only=True))
+        model.load_state_dict(torch.load(os.path.join(self.script_path, f'data\\model_torch.pt'), weights_only=True))
+        print("Hier wurde das MOdell schon geladen")
+        print(model)
+        model.eval()
         return model 
     def load_data_graph(self):
         #with open('data_graph.pkl', 'rb') as fp:
@@ -65,7 +118,7 @@ class Data_load():
         ratings_filtered_m = ratings_filtered.merge(df_mapping_user, left_on = "User-ID", right_on="user_id", how = "left")
         self.ratings_filtered_m = ratings_filtered_m.merge(df_mapping_item, left_on = "ISBN", right_on="isbn_id", how = "left")
         
-        grouped = self.ratings_filtered_m.groupby(["isbn_id"]).mean()
+        grouped = self.ratings_filtered_m.groupby(["isbn_id"]).mean(numeric_only=True)
         self.grouped_books_rating =  grouped.sort_values(['Book-Rating'], ascending=False)
         return None
     
