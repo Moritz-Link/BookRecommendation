@@ -4,4 +4,4 @@ Please run the data_notebook.ipynb first and move all the resulting files into t
 
 Afterwards you can start the Django Application and test it. 
 
-![alt text](https://github.com/Moritz-Link/BookRecommendation/blob/main/App.png?raw=true) 
+![alt text](https://github.com/Moritz-Link/BookRecommendation/blob/main/AppImage.png?raw=true) 
