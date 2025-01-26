@@ -32,7 +32,7 @@
         <div id="main">
             <div id="selection">
                 <div id ="Search">
-                    <p> Search</p>
+                    <h2> Search</h2>
                 </div>
                 <ul id="childWrapper">
                     {% for book in books %}
@@ -56,7 +56,7 @@
             </div>
             <div id="main_part2">
                 <div id="choice">
-                    <div id="choice_text"class="title_parts"><p> Your Choice</p></div>
+                    <div id="choice_text"class="title_parts"><h2> Your Choice</h2></div>
                     <div id="images_choice">
                         <ul class="choice_list">
                             {% for c in choice %}
@@ -70,17 +70,10 @@
                             {% endfor %}
                         </ul> 
                     </div>
-                    <div id="div_rec_btns">
-                        <form action ="/predict_function">
-                            <button id="btn_predict"> Predict </button>
-                        </form>
-                        <form action ="/reset_function">
-                            <button id="btn_predict"> Reset </button>
-                        </form>
-                    </div>
+
                 </div>
                 <div id="recommendation">
-                    <div id="redommendation_text" class="title_parts"><p> Recommendation</p></div>
+                    <div id="redommendation_text" class="title_parts"><h2> Recommendation</h2></div>
                     <div id="images_choice">
                         <ul class="choice_list">
                             {% for c in recommendation %}
@@ -95,6 +88,15 @@
                         </ul>
                     </div>
                 </div>
+
+            </div>
+            <div id="div_rec_btns">
+                <form action ="/predict_function">
+                    <button class="btn_predict" id="predict_btn"> Predict </button>
+                </form>
+                <form action ="/reset_function">
+                    <button class="btn_predict" id="reset_btn"> Reset </button>
+                </form>
             </div>
         </div>
 
