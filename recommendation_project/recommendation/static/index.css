@@ -3,29 +3,31 @@
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: system-ui;
   }
 #content{
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 5fr ;
     gap: 1rem;
-    background-color: #ffffff;
+    background-color: #cbcaca;
     margin-top: 5px;
 
 }
 .body{
     background-image: url("https://images.amazon.com/images/P/0671537458.01.THUMBZZZ.jpg");
-
+    border: 5px solid rgb(234, 50, 185);
 }
 
 .sidebar {
     grid-column: 1 ;
     grid-row: 1;
-    height: 81%;
+    height: 100%;
     overflow:auto;
     background-color: #ffffff;
     word-break: break-word;
     border-radius: 5px;
+    border-right: 5px solid rgb(9, 9, 9);
     padding-left: 1%;
 }
 .sidebar > h2 {
@@ -40,18 +42,18 @@
     grid-row: 1;
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
+    background-color: #cbcaca;
 }
 #main_part2 {
     height: 100%;
     display: flex;
-    background-color: #ffffff;
+    background-color: #cbcaca;
 }
 #selection{
    
     height: 100%;
     overflow:auto;
-    background-color: #e2e2e2;
+    background-color: #ffffff;
     text-align: center;
     align-items: center;
     white-space: normal;
@@ -59,7 +61,7 @@
 }
 #Search{
     height: 10%;
-    background-color: #598792;
+    background-color: #4ad3dd;
 }
 #childWrapper > div {
     
@@ -68,7 +70,7 @@
     height: 40%;
     margin: 1%;
     display: flex;
-    background-color: #e2e2e2;
+    background-color: #ffffff;
     
 }
 .choice_list > div {
@@ -78,34 +80,33 @@
     height: 60%;
     margin: 5%;
     display: flex;
-    background-color: #e2e2e2;
+    background-color: #ffffff;
 }
 #choice {
     flex: 1 1 ;
     height: 98%;
     overflow:auto;
-    background-color: #e2e2e2;
+    background-color: #ffffff;
     margin-top: 1%;
 }
 .title_parts{
-    height: 5%;
-    background-color: #598792;
+    height: 7%;
+    background-color: #4ad3dd;
     text-align: center;
     color : black;
     
 }
 #images_choice{
-    background-color: #e2e2e2;
+    background-color: #ffffff;
     height: 60%;
     overflow:auto;
 }
 #div_rec_btns{
-    width: 50%;
-    height: 10%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #e2e2e2;
-    position: relative;
+    margin-top: 2%;
+    width: 48%;
+    height: 7%;
+    background-color: #cbcaca;
+    display: flex;
 }
 #recommendation{
     flex: 1 1 ;
@@ -113,14 +114,14 @@
     overflow:auto;
     margin-left: 2%;
     margin-top: 1%;
-    background-color: #e2e2e2;
+    background-color: #ffffff;
 }
 .image_rec{
 
     height: 60%;
     
     
-    background-color: #a82c2c;
+    background-color: #ffffff;
 }
 .rec_list > div{
     float: left;
@@ -135,16 +136,19 @@
     color: #000000;
     text-align: center;
 }
-#btn_predict{
+.btn_predict{
     font-size: 100%;
+    width: 90%; 
     color : white;
     background-color:#2e2e2e;
-    height: 50%;
-    width: 30%; 
-    margin-top: 2%;
+    height: 90%;
     margin-left: 20%;
-    border-radius: 10px;
+    margin-right: 100px;
+    text-align: center;
+    padding: 5px;
+
 }
+
 #btn-loadmore{
     background-color:#598792;
     height: 50%;
